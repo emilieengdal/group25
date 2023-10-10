@@ -31,6 +31,16 @@ And another one:
 print("Goodbye!")
 ```
 
+#### New feature
+
+You can now choose your greeting from a list of options:
+
+```{r}
+greeting <- c('Hello', 'Goodbye')
+print(greeting[1])
+print(greeting[2])
+```
+
 ### Jennifer
 
 ### Dasha
