@@ -25,8 +25,20 @@ x/y
 
 ### Manon
 
+#### New feature
+
+You can now choose your greeting from a list of options:
+
+```{r}
+greeting <- c('Hello', 'Goodbye')
+print(greeting[1])
+print(greeting[2])
+```
+
 ### Jennifer
+
 see below for an example code block
+
 ```{r}
 library(tidyverse)
 mpg_df <- mpg
@@ -34,4 +46,3 @@ mpg_df %>% head()
 ```
 
 ### Dasha
-
