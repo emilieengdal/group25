@@ -41,3 +41,12 @@ Hello everyone, here I define a new vector:
 dartru_vector <- 2+16*45
 dartru_vector
 ```
+
+#### New feature
+
+This feature will revolutionize everything we know.
+
+```{r}
+dartru_vector_new <- 294*4+3489
+dartru_vector_new
+```
