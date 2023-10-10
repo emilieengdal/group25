@@ -5,7 +5,6 @@ format:
     embed-resources: true
 editor: visual
 ---
-
 Created by Group 25 of the R for Bio Data Science Course, Autumn Semester
 
 | Student IDs | Names                    |
@@ -17,13 +16,7 @@ Created by Group 25 of the R for Bio Data Science Course, Autumn Semester
 |     s215112 | Manon Kirstine Chevalier |
 
 # PCA tidyverse style
-
 This is a code-along practice based on [Wilke's PCA tidyverse style](https://clauswilke.com/blog/2020/09/07/pca-tidyverse-style/).
-
-## Loading packages
-```{r}
-library(tidyverse)
-```
 
 ## Jennifer: Look at the data in PC coordinates
 
