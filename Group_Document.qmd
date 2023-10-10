@@ -26,5 +26,11 @@ x/y
 ### Manon
 
 ### Jennifer
+see below for an example code block
+```{r}
+library(tidyverse)
+mpg_df <- mpg
+mpg_df %>% head()
+```
 
 ### Dasha
