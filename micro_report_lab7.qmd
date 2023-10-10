@@ -21,6 +21,7 @@ Created by Group 25 of the R for Bio Data Science Course, Autumn Semester
 This is a code-along practice based on [Wilke's PCA tidyverse style](https://clauswilke.com/blog/2020/09/07/pca-tidyverse-style/).
 
 ## Loading packages
+
 ```{r}
 library(tidyverse)
 ```
