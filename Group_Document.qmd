@@ -16,37 +16,16 @@ x <- 2+2
 x+4
 ```
 
+new feature - Amazing mathematics
+
+```{r}
+y<- 6+10
+x/y
+```
+
 ### Manon
-
-This is my code chunk.
-
-```{r}
-print("Hello!")
-
-```
-
-And another one:
-
-```{r}
-print("Goodbye!")
-```
 
 ### Jennifer
 
 ### Dasha
 
-Hello everyone, here I define a new vector:
-
-```{r}
-dartru_vector <- 2+16*45
-dartru_vector
-```
-
-#### New feature
-
-This feature will revolutionize everything we know.
-
-```{r}
-dartru_vector_new <- 294*4+3489
-dartru_vector_new
-```
