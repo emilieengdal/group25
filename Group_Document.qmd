@@ -12,6 +12,19 @@ editor: visual
 
 ### Manon
 
+Hello, this is my code chunk.
+
+```{r}
+print("Hello, this is my code chunk.")
+
+```
+
+And another one:
+
+```{r}
+print("And another one. Goodbye!")
+```
+
 ### Jennifer
 
 ### Dasha
