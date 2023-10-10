@@ -10,6 +10,19 @@ editor: visual
 
 ### Andreas
 
+```{r}
+library(tidyverse)
+x <- 2+2
+x+4
+```
+
+new feature - Amazing mathematics
+
+```{r}
+y<- 6+10
+x/y
+```
+
 ### Manon
 
 ### Jennifer
