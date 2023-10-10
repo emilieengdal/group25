@@ -8,6 +8,18 @@ editor: visual
 
 ### Emilie
 
+#### New Feature
+
+```{r}
+# Really cool code
+```
+
+#### New Analysis
+
+```{r}
+# Gives insane results 
+```
+
 ### Andreas
 
 ### Manon
