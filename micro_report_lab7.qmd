@@ -5,6 +5,7 @@ format:
     embed-resources: true
 editor: visual
 ---
+
 Created by Group 25 of the R for Bio Data Science Course, Autumn Semester
 
 | Student IDs | Names                    |
@@ -14,7 +15,6 @@ Created by Group 25 of the R for Bio Data Science Course, Autumn Semester
 |     s194360 | Emilie Sofie Engdal      |
 |     s230705 | Jennifer Fortuny I Zhan  |
 |     s215112 | Manon Kirstine Chevalier |
-
 
 # PCA tidyverse style
 
