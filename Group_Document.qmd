@@ -34,10 +34,12 @@ mpg_df %>% head()
 ```
 ## New analysis
 Here is some more test and another code block
+Here is another comment
 ```{r}
 mpg_df %>% ggplot(aes(x = displ, y = cty)) +
   geom_point()
 ```
+
 
 
 
