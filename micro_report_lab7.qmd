@@ -1,6 +1,8 @@
 ---
-title: "Micro_report_lab7"
-format: html
+title: "micro_report_lab7 by Group 25"
+format:
+  html:
+    embed-resources: true
 editor: visual
 ---
 
