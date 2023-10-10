@@ -8,18 +8,6 @@ editor: visual
 
 ### Emilie
 
-#### New Feature
-
-```{r}
-# Really cool code
-```
-
-#### New Analysis
-
-```{r}
-# Gives insane results 
-```
-
 ### Andreas
 
 ```{r}
@@ -28,28 +16,15 @@ x <- 2+2
 x+4
 ```
 
+new feature - Amazing mathematics
+
+```{r}
+y<- 6+10
+x/y
+```
+
 ### Manon
-
-This is my code chunk.
-
-```{r}
-print("Hello!")
-
-```
-
-And another one:
-
-```{r}
-print("Goodbye!")
-```
 
 ### Jennifer
 
 ### Dasha
-
-Hello everyone, here I define a new vector:
-
-```{r}
-dartru_vector <- 2+16*45
-dartru_vector
-```
