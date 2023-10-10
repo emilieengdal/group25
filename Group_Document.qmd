@@ -6,4 +6,31 @@ editor: visual
 
 ## Group Document
 
-### s194360
+### Emilie
+
+### Andreas
+
+```{r}
+library(tidyverse)
+x <- 2+2
+x+4
+```
+
+### Manon
+
+Hello, this is my code chunk.
+
+```{r}
+print("Hello, this is my code chunk.")
+
+```
+
+And another one:
+
+```{r}
+print("And another one. Goodbye!")
+```
+
+### Jennifer
+
+### Dasha
