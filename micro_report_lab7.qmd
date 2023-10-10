@@ -27,7 +27,7 @@ The `echo: false` option disables the printing of code (only output is displayed
 
 # PCA tidyverse style
 
-For our PCA example, we\'ll need the packages tidyverse and broom. Note that as of this writing, we need the current development version of broom [because of a bug](https://github.com/tidymodels/broom/issues/923) in `tidy.prcomp()`. We\'ll also use the cowplot package for plot themes.
+For our PCA example, we'll need the packages tidyverse and broom. Note that as of this writing, we need the current development version of broom [because of a bug](https://github.com/tidymodels/broom/issues/923) in `tidy.prcomp()`. We'll also use the cowplot package for plot themes.
 
 ```{r}
 library(tidyverse)
@@ -41,4 +41,32 @@ library(tidyverse)
 # x dplyr::lag()    masks stats::lag()
 library(broom)  # devtools::install_github("tidymodels/broom")
 library(cowplot)
+```
+
+```{r}
+biopsy <- read_csv("https://wilkelab.org/classes/SDS348/data_sets/biopsy.csv")
+# Parsed with column specification:
+# cols(
+#   clump_thickness = col_double(),
+#   uniform_cell_size = col_double(),
+#   uniform_cell_shape = col_double(),
+#   marg_adhesion = col_double(),
+#   epithelial_cell_size = col_double(),
+#   bare_nuclei = col_double(),
+#   bland_chromatin = col_double(),
+#   normal_nucleoli = col_double(),
+#   mitoses = col_double(),
+#   outcome = col_character()
+# )
+
+```
+
+## Look at the data in PC coordinates
+
+We start by running the PCA and storing the result in a variable `pca_fit`. There are two issues to consider here. First, the `prcomp()` function can only deal with numeric columns, so we need to remove all non-numeric columns from the data. This is straightforward using the `where(is.numeric)` tidyselect construct. Second, we normally want to scale the data values to unit variance before PCA. We do so by using the argument `scale = TRUE` in `prcomp()`.
+
+```{r}
+pca_fit <- biopsy %>% 
+  select(where(is.numeric)) %>% # retain only numeric columns
+  prcomp(scale = TRUE) # do PCA on scaled data
 ```
