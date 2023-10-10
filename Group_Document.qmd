@@ -18,17 +18,17 @@ x+4
 
 ### Manon
 
-Hello, this is my code chunk.
+This is my code chunk.
 
 ```{r}
-print("Hello, this is my code chunk.")
+print("Hello!")
 
 ```
 
 And another one:
 
 ```{r}
-print("And another one. Goodbye!")
+print("Goodbye!")
 ```
 
 ### Jennifer
