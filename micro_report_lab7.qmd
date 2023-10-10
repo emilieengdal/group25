@@ -1,4 +1,5 @@
 ---
+dartru
 title: "Micro_report_lab7"
 format: html
 editor: visual
@@ -70,6 +71,7 @@ pca_fit <- biopsy %>%
   select(where(is.numeric)) %>% # retain only numeric columns
   prcomp(scale = TRUE) # do PCA on scaled data
 ```
+<<<<<<< HEAD
 
 As an alternative to `scale = TRUE`, we could also have scaled the data by explicitly invoking the `scale()` function.
 
@@ -94,3 +96,37 @@ pca_fit %>%
 ```
 
 ## Look at the data in PC coordinates
+=======
+=======
+title: "micro_report_lab7 by Group 25"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+Created by Group 25 of the R for Bio Data Science Course, Autumn Semester
+
+| Student IDs | Names                    |
+|------------:|--------------------------|
+|     s154146 | Andreas Høyer Kongsgaard |
+|     s221047 | Darya Trubach            |
+|     s194360 | Emilie Sofie Engdal      |
+|     s230705 | Jennifer Fortuny I Zhan  |
+|     s215112 | Manon Kirstine Chevalier |
+
+# PCA tidyverse style
+
+This is a code-along practice based on [Wilke's PCA tidyverse style](https://clauswilke.com/blog/2020/09/07/pca-tidyverse-style/).
+
+## Loading packages
+
+```{r}
+library(tidyverse)
+```
+
+## Jennifer: Look at the data in PC coordinates
+
+## Jennifer: Look at the variance explained by each PC
+main
+>>>>>>> cee86f1e8966282c8ee23886c2b8956fc4d92517

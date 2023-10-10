@@ -24,3 +24,11 @@ You can add options to executable code like this
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+usethis::use_git_config(user.name = "dartrudtu", user.email = "dartru@dtu.dk")
+
+usethis::create_github_token()
+
+gitcreds::gitcreds_set()
+```
