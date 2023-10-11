@@ -1,8 +1,8 @@
 ---
-dartru
-dartru
-title: "Micro_report_lab7"
-format: html
+title: Lab 7 Assignment by Group 25
+format:
+  html:
+    embed-resources: true
 editor: visual
 ---
 
@@ -82,27 +82,14 @@ pca_fit %>%
   theme_half_open(12) + background_grid()
 ```
 
-dartru
-### Rotation Matrix
-=======
-## Look at the data in PC coordinates
-=======
-=======
-=======
-main
-title: "micro_report_lab7 by Group 25"
-format:
-  html:
-    embed-resources: true
-editor: visual
----
+dartru \### Rotation Matrix ======= \## Look at the data in PC coordinates ======= ======= ======= main title: "micro_report_lab7 by Group 25" format: html: embed-resources: true editor: visual ---
 
 Created by Group 25 of the R for Bio Data Science Course, Autumn Semester
 
-
-Next, we plot the rotation matrix. The rotation matrix is stored as `pca_fit$rotation`, but here we\'ll extract it using the `tidy()` function from broom. When applied to `prcomp` objects, the `tidy()` function takes an additional argument `matrix`, which we set to `matrix = "rotation"` to extract the rotation matrix.
+Next, we plot the rotation matrix. The rotation matrix is stored as `pca_fit$rotation`, but here we'll extract it using the `tidy()` function from broom. When applied to `prcomp` objects, the `tidy()` function takes an additional argument `matrix`, which we set to `matrix = "rotation"` to extract the rotation matrix.
 
 dartru
+
 ```{r}
 # extract rotation matrix
 pca_fit %>%
@@ -149,13 +136,12 @@ pca_fit %>%
   coord_fixed() + # fix aspect ratio to 1:1
   theme_minimal_grid(12)
 ```
-=======
-# PCA tidyverse style
 
+======= \# PCA tidyverse style
 
-## Look at the variance explained by each PC 
+## Look at the variance explained by each PC
 
-Finally, we\'ll plot the variance explained by each PC. We can again extract this information using the `tidy()` function from broom, now by setting the `matrix` argument to `matrix = "eigenvalues"`.
+Finally, we'll plot the variance explained by each PC. We can again extract this information using the `tidy()` function from broom, now by setting the `matrix` argument to `matrix = "eigenvalues"`.
 
 ```{r}
 pca_fit %>%
