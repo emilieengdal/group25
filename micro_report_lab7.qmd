@@ -6,6 +6,10 @@ format:
 editor: visual
 ---
 
+```{r setup, include=FALSE}
+options(repos = c(CRAN = "https://cloud.r-project.org/"))
+```
+
 | Student IDs | Names                    |
 |------------:|--------------------------|
 |     s154146 | Andreas Høyer Kongsgaard |
@@ -14,11 +18,21 @@ editor: visual
 |     s230705 | Jennifer Fortuny I Zhan  |
 |     s215112 | Manon Kirstine Chevalier |
 
+# Background
+
+Principal Component Analysis (PCA) is a widely-used technique in statistics and machine learning for dimensionality reduction and data visualisation. It aims to transform the original set of correlated variables into a new set of uncorrelated variables, known as principal components, which capture most of the variability in the data.
+
+In the realm of data analysis using R, the tidyverse package is often considered a go-to tool. It offers a cohesive set of packages for data manipulation, exploration, and visualisation in a "tidy" data format. Combining PCA with the tidyverse style of coding provides an intuitive and efficient approach to data analysis.
+
+Professor Claus O. Wilke has demonstrated the implementation of PCA in a tidyverse style through a comprehensive post. This micro-report aims to perform a code-along with the data and methodology presented in Professor Wilke's post. Alternatively, this exercise can also be replicated using the Gravier dataset or other datasets to compare and contrast the efficacy and insights gathered through this approach.
+
 # PCA tidyverse style
 
 For our PCA example, we'll need the packages tidyverse and broom. Note that as of this writing, we need the current development version of broom [because of a bug](https://github.com/tidymodels/broom/issues/923) in `tidy.prcomp()`. We'll also use the cowplot package for plot themes.
 
-```{r}
+## Loading libraries
+
+```{r results='hide'}
 library(tidyverse)
 # ── Attaching packages ────────────────────────────────── tidyverse 1.3.0 ──
 # ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
@@ -30,31 +44,24 @@ library(tidyverse)
 # x dplyr::lag()    masks stats::lag()
 library(broom)  # devtools::install_github("tidymodels/broom")
 library(cowplot)
+install.packages("ggrepel")
+library(ggrepel)
+library(ggplot2)
+library(gridExtra)
+library(tibble)
 ```
 
-```{r}
-biopsy <- read_csv("https://wilkelab.org/classes/SDS348/data_sets/biopsy.csv")
-# Parsed with column specification:
-# cols(
-#   clump_thickness = col_double(),
-#   uniform_cell_size = col_double(),
-#   uniform_cell_shape = col_double(),
-#   marg_adhesion = col_double(),
-#   epithelial_cell_size = col_double(),
-#   bare_nuclei = col_double(),
-#   bland_chromatin = col_double(),
-#   normal_nucleoli = col_double(),
-#   mitoses = col_double(),
-#   outcome = col_character()
-# )
+## Loading data
 
+```{r results='hide'}
+biopsy <- read_csv("https://wilkelab.org/classes/SDS348/data_sets/biopsy.csv")
 ```
 
 ## Look at the data in PC coordinates
 
 We start by running the PCA and storing the result in a variable `pca_fit`. There are two issues to consider here. First, the `prcomp()` function can only deal with numeric columns, so we need to remove all non-numeric columns from the data. This is straightforward using the `where(is.numeric)` tidyselect construct. Second, we normally want to scale the data values to unit variance before PCA. We do so by using the argument `scale = TRUE` in `prcomp()`.
 
-```{r}
+```{r results='hide'}
 pca_fit <- biopsy %>% 
   select(where(is.numeric)) %>% # retain only numeric columns
   prcomp(scale = TRUE) # do PCA on scaled data
@@ -62,7 +69,7 @@ pca_fit <- biopsy %>%
 
 As an alternative to `scale = TRUE`, we could also have scaled the data by explicitly invoking the `scale()` function.
 
-```{r}
+```{r results='hide'}
 pca_fit <- biopsy %>% 
   select(where(is.numeric)) %>% # retain only numeric columns
   scale() %>% # scale data
@@ -75,101 +82,84 @@ Now, we want to plot the data in PC coordinates. In general, this means combinin
 pca_fit %>%
   augment(biopsy) %>% # add original dataset back in
   ggplot(aes(.fittedPC1, .fittedPC2, color = outcome)) + 
-  geom_point(size = 1.5) +
+  geom_point(size = 1.5, aes(shape = outcome), stroke = 0.5) +
   scale_color_manual(
-    values = c(malignant = "#D55E00", benign = "#0072B2")
+    values = c(malignant = "#FF4500", benign = "#32CD32")) +
+  scale_shape_manual(
+    values = c(malignant = 16, benign = 17) # Different shapes for each outcome
   ) +
-  theme_half_open(12) + background_grid()
+  ggtitle("PCA Analysis of Biopsy Data") + # Adding a title
+  theme_minimal(base_size = 14) + # A minimal and classy theme
+  theme(
+    axis.title.x = element_text(face = "bold", size = 16),
+    axis.title.y = element_text(face = "bold", size = 16),
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 18)
+  )
 ```
 
-dartru \### Rotation Matrix ======= \## Look at the data in PC coordinates ======= ======= ======= main title: "micro_report_lab7 by Group 25" format: html: embed-resources: true editor: visual ---
+## Rotation Matrix
 
-Created by Group 25 of the R for Bio Data Science Course, Autumn Semester
+Look at the data in PC coordinates. Next, we plot the rotation matrix. The rotation matrix is stored as `pca_fit$rotation`, but here we'll extract it using the `tidy()` function from broom. When applied to `prcomp` objects, the `tidy()` function takes an additional argument `matrix`, which we set to `matrix = "rotation"` to extract the rotation matrix.
 
-Next, we plot the rotation matrix. The rotation matrix is stored as `pca_fit$rotation`, but here we'll extract it using the `tidy()` function from broom. When applied to `prcomp` objects, the `tidy()` function takes an additional argument `matrix`, which we set to `matrix = "rotation"` to extract the rotation matrix.
-
-dartru
-
-```{r}
+```{r results='hide'}
 # extract rotation matrix
 pca_fit %>%
   tidy(matrix = "rotation")
 ```
 
-```{r}
-# # A tibble: 81 x 3
-#    column               PC    value
-#    <chr>             <dbl>    <dbl>
-#  1 clump_thickness       1 -0.302  
-#  2 clump_thickness       2 -0.141  
-#  3 clump_thickness       3  0.866  
-#  4 clump_thickness       4 -0.108  
-#  5 clump_thickness       5  0.0803 
-#  6 clump_thickness       6 -0.243  
-#  7 clump_thickness       7 -0.00852
-#  8 clump_thickness       8  0.248  
-#  9 clump_thickness       9 -0.00275
-# 10 uniform_cell_size     1 -0.381  
-# # … with 71 more rows
-```
-
-### Now in the context of a plot:
+## Now in the context of a plot:
 
 ```{r}
-# define arrow style for plotting
+# Prepare data with acronyms
+rot_data <- pca_fit %>%
+  tidy(matrix = "rotation") %>%
+  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>%
+  mutate(acronym = c("CT", "CS", "CSh", "MA", "SE", "BN", "BC", "NN", "M"))  # 9 acronyms for 9 rows
+
+# Define arrow style for plotting
 arrow_style <- arrow(
   angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
 )
 
-# plot rotation matrix
-pca_fit %>%
-  tidy(matrix = "rotation") %>%
-  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>%
+# Plotting
+p <- rot_data %>%
   ggplot(aes(PC1, PC2)) +
-  geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
-  geom_text(
-    aes(label = column),
-    hjust = 1, nudge_x = -0.02, 
-    color = "#904C2F"
-  ) +
+  geom_segment(aes(xend = 0, yend = 0), arrow = arrow_style) +
+  geom_text_repel(aes(label = acronym), box.padding = 1, point.padding = 1, 
+                  color = "#0000BF", max.overlaps = 50) +  # increased max.overlaps
   xlim(-1.25, .5) + ylim(-.5, 1) +
-  coord_fixed() + # fix aspect ratio to 1:1
-  theme_minimal_grid(12)
-```
+  coord_fixed() +
+  theme_minimal_grid(12) +
+  labs(title = "Principal Component Analysis",  # Added title
+       x = "Principal Component 1", y = "Principal Component 2")
 
-======= \# PCA tidyverse style
+# Create a table of acronyms
+acronym_table <- tibble(Acronym = c("CT", "CS", "CSh", "MA", "SE", "BN", "BC", "NN", "M"),
+                        Description = c("Clump Thickness", "Cell Size", "Cell Shape", "Mitoses Activity", 
+                                        "Single Epithelial", "Bare Nuclei", "Bland Chromatin", 
+                                        "Normal Nuclei", "Mitoses"))
+
+# Show the plot and the table
+print(p)
+print(acronym_table)
+```
 
 ## Look at the variance explained by each PC
 
 Finally, we'll plot the variance explained by each PC. We can again extract this information using the `tidy()` function from broom, now by setting the `matrix` argument to `matrix = "eigenvalues"`.
 
-```{r}
+```{r results='hide'}
 pca_fit %>%
   tidy(matrix = "eigenvalues")
 ```
 
-```{r}
-# # A tibble: 9 x 4
-#      PC std.dev percent cumulative
-#   <dbl>   <dbl>   <dbl>      <dbl>
-# 1     1   2.43  0.656        0.656
-# 2     2   0.881 0.0862       0.742
-# 3     3   0.734 0.0599       0.802
-# 4     4   0.678 0.0511       0.853
-# 5     5   0.617 0.0422       0.895
-# 6     6   0.549 0.0335       0.928
-# 7     7   0.543 0.0327       0.961
-# 8     8   0.511 0.0290       0.990
-# 9     9   0.297 0.00982      1
-```
-
-### Now in the context of a plot.
+## Now in the context of a plot.
 
 ```{r}
 pca_fit %>%
   tidy(matrix = "eigenvalues") %>%
   ggplot(aes(PC, percent)) +
-  geom_col(fill = "#56B4E9", alpha = 0.8) +
+  geom_col(fill = "#0000BF", alpha = 0.8) +
   scale_x_continuous(breaks = 1:9) +
   scale_y_continuous(
     labels = scales::percent_format(),
